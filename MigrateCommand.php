@@ -8,9 +8,12 @@ class MigrateCommand extends CConsoleCommand{
             if($args[0] == 'make') {
                 $this->makeMigrate($args);
             } else if($args[0] == 'rollback') {
+                echo "Developing now.";
                 // TODO
             } else {
-                echo "仅支持 make/run 参数\r\n";
+                echo "Usage:\r\n";
+                echo "* php artisan migrate make your-migration\r\n";
+                echo "* php artisan migrate run\r\n";
                 return false;
             }
         }
@@ -21,11 +24,11 @@ class MigrateCommand extends CConsoleCommand{
         $sql = "CREATE TABLE IF NOT EXISTS `migrations` (
              `id` int(11) NOT NULL AUTO_INCREMENT,
              `migration` varchar(512) NOT NULL,
-             `batch` tinyint(4) NOT NULL,
+             `batch` int(11) NOT NULL,
              PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
         Yii::app()->db->createCommand($sql)->execute();
-        echo "Migration table initialized...\r\n";
+        echo "Migration table has been initialized...\r\n";
     }
 
     public function executeMigrate() {
